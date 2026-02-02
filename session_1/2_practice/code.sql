@@ -34,3 +34,8 @@ SELECT LibraryBranch.name, COUNT(Books.title) FROM LibraryBranch LEFT JOIN Books
 --Branches with more than 7 books
 --Show branches that hold more than 7 books.
 SELECT LibraryBranch.name FROM LibraryBranch LEFT JOIN Books ON LibraryBranch.id=Books.branch_id GROUP BY LibraryBranch.name HAVING COUNT(Books.title)>7;
+
+--(8)
+--Branch loan totals
+--For each library branch, show the total number of loans for books in that branch.
+SELECT LibraryBranch.name, COUNT(Loans.id) FROM LibraryBranch JOIN Books ON LibraryBranch.id=Books.branch_id JOIN Loans ON Loans.book_id=Books.id GROUP BY LibraryBranch.name;
