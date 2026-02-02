@@ -6,16 +6,22 @@ import sqlite3
 
 def total_customers(conn):
     cursor=conn.execute("SELECT COUNT(customer_id) FROM customers;")
-    for count in cursor:
-        print(f"Number of customers: {count[0]}")
+    row=cursor.fetchone()
+    print(f"Number of customers: {row[0]}")
+    #since this query only returns one row, using a for loop would be misleading
+    #so fetchone is more appropriate
 
 def customer_signup_range(conn):
-    pass
-
+    cursor=conn.execute("SELECT MAX(signup_date), MIN(signup_date) FROM customers;")
+    row=cursor.fetchone()
+    print(f"Customers signed up between {row[1]} and {row[0]}")
 
 def order_summary_stats(conn):
-    pass
-
+    orderCount=conn.execute("SELECT COUNT(order_id) FROM orders;").fetchone()[0]
+    avgOrder=conn.execute("SELECT AVG(order_total) FROM orders;").fetchone()[0]
+    orderRange=conn.execute("SELECT MAX(order_total), MIN(order_total) FROM orders;").fetchone()
+    max,min=orderRange[0],orderRange[1]
+    #TODO PRINT THESE STATS
 
 def driver_summary(conn):
     pass
