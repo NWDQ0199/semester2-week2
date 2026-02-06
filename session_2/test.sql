@@ -85,4 +85,6 @@ GROUP BY category
 
 
 --SELECT orders.order_id,COUNT(order_items.product_id) as items FROM orders LEFT JOIN order_items ON orders.order_id=order_items.order_id GROUP BY orders.order_id;
-SELECT AVG(items) FROM (SELECT orders.order_id,COUNT(order_items.product_id) as items FROM orders LEFT JOIN order_items ON orders.order_id=order_items.order_id GROUP BY orders.order_id);
+--SELECT AVG(items) FROM (SELECT orders.order_id,COUNT(order_items.product_id) as items FROM orders LEFT JOIN order_items ON orders.order_id=order_items.order_id GROUP BY orders.order_id);
+
+SELECT category, SUM(orders.total_amount) as category_revenue FROM products LEFT JOIN order_items ON products.product_id=order_items.product_id LEFT JOIN orders ON order_items.order_id=orders.order_id GROUP BY category;

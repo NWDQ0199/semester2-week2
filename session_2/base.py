@@ -62,6 +62,18 @@ def task_8(db):
     figure.subplots_adjust(bottom=0.3)
     figure.savefig('task 8.png')
 
+def task_9(db):
+    sql="SELECT products.product_id, SUM(quantity) as sum FROM products LEFT JOIN order_items ON products.product_id=order_items.product_id GROUP BY products.product_id;"
+    cursor=db.execute(sql)
+    for row in cursor:
+        print(f"Product\n\tID: {row[0]}\n\tTotal Sold: {row[1]}")
+
+def task_10(db):
+    sql="SELECT category, SUM(orders.total_amount) as category_revenue FROM products LEFT JOIN order_items ON products.product_id=order_items.product_id LEFT JOIN orders ON order_items.order_id=orders.order_id GROUP BY category;"
+    cursor=db.execute(sql)
+    for row in cursor:
+        print(f"Category\n\tName: {row[0]}\n\tTotal Revenue: {row[1]}")
+
 def main():
     db=get_connection()
     #task_1(db)
@@ -71,7 +83,9 @@ def main():
     #task_5(db)
     #task_6(db)
     #task_7(db)
-    task_8(db)
+    #task_8(db)
+    #task_9(db)
+    task_10(db)
     db.close()
 
 
