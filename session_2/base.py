@@ -46,12 +46,21 @@ def task_6(db):
     axes=df.plot.bar(x="category",y="orders")
     figure=axes.get_figure()
     figure.subplots_adjust(bottom=0.3)
-    figure.savefig('plot.png')
+    figure.savefig('task 6.png')
 
 def task_7(db):
     sql="SELECT AVG(items) FROM (SELECT COUNT(order_items.product_id) as items FROM orders LEFT JOIN order_items ON orders.order_id=order_items.order_id GROUP BY orders.order_id);"
     row=db.execute(sql).fetchone()
     print(f"Average number of different products per order: {row[0]}")
+
+def task_8(db):
+    sql="SELECT delivery_status, COUNT(delivery_id) as number FROM deliveries GROUP BY delivery_status;"
+    df=pd.read_sql_query(sql,db)
+    df.rename({"delivery_status":"Delivery Status","number":"Number"},axis="columns",inplace=True)
+    axes=df.plot.bar(x="Delivery Status",y="Number")
+    figure=axes.get_figure()
+    figure.subplots_adjust(bottom=0.3)
+    figure.savefig('task 8.png')
 
 def main():
     db=get_connection()
@@ -61,7 +70,8 @@ def main():
     #task_4(db)
     #task_5(db)
     #task_6(db)
-    task_7(db)
+    #task_7(db)
+    task_8(db)
     db.close()
 
 
