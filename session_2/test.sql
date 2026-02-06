@@ -73,4 +73,12 @@ yvonne33@example.net
 */
 --lmartin@example.com
 
-SELECT SUM(total_amount) FROM customers LEFT JOIN orders ON orders.customer_id=customers.customer_id GROUP BY orders.customer_id ORDER BY SUM(total_amount) DESC LIMIT 5;
+--SELECT SUM(total_amount) FROM customers LEFT JOIN orders ON orders.customer_id=customers.customer_id GROUP BY orders.customer_id ORDER BY SUM(total_amount) DESC LIMIT 5;
+
+/*SELECT category, COUNT(orders.order_id)
+FROM products
+LEFT JOIN order_items ON products.product_id=order_items.product_id
+LEFT JOIN orders ON order_items.order_id=orders.order_id
+GROUP BY category
+;*/
+--SELECT category, COUNT(orders.order_id) FROM products LEFT JOIN order_items ON products.product_id=order_items.product_id LEFT JOIN orders ON order_items.order_id=orders.order_id GROUP BY category;

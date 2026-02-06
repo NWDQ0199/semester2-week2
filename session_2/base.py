@@ -38,13 +38,24 @@ def task_5(db):
     for row in cursor:
         print(f"Customer\n\tID: {row[0]}\n\tSpent: {row[1]}")
 
+def task_6(db):
+    sql="SELECT category, COUNT(orders.order_id) as order_count FROM products LEFT JOIN order_items ON products.product_id=order_items.product_id LEFT JOIN orders ON order_items.order_id=orders.order_id GROUP BY category;"
+    df=pd.read_sql_query(sql,db)
+    #print(df.columns.values)
+    df.rename({"order_count":"orders"},axis="columns",inplace=True)
+    axes=df.plot.bar(x="category",y="orders")
+    figure=axes.get_figure()
+    figure.subplots_adjust(bottom=0.3)
+    figure.savefig('plot.png')
+
 def main():
     db=get_connection()
     #task_1(db)
     #task_2(db)
     #task_3(db,r"lmartin@example.com")
     #task_4(db)
-    task_5(db)
+    #task_5(db)
+    task_6(db)
     db.close()
 
 
