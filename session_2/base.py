@@ -48,6 +48,11 @@ def task_6(db):
     figure.subplots_adjust(bottom=0.3)
     figure.savefig('plot.png')
 
+def task_7(db):
+    sql="SELECT AVG(items) FROM (SELECT COUNT(order_items.product_id) as items FROM orders LEFT JOIN order_items ON orders.order_id=order_items.order_id GROUP BY orders.order_id);"
+    row=db.execute(sql).fetchone()
+    print(f"Average number of different products per order: {row[0]}")
+
 def main():
     db=get_connection()
     #task_1(db)
@@ -55,7 +60,8 @@ def main():
     #task_3(db,r"lmartin@example.com")
     #task_4(db)
     #task_5(db)
-    task_6(db)
+    #task_6(db)
+    task_7(db)
     db.close()
 
 
