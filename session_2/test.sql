@@ -2,7 +2,7 @@
 --amccarthy@example.com
 --SELECT order_id FROM orders JOIN customers ON orders.customer_id=customers.customer_id GROUP BY customers.email HAVING customers.email='amccarthy@example.com';
 --SELECT order_id FROM orders JOIN customers ON orders.customer_id=customers.customer_id GROUP BY customers.email HAVING customers.email='paula42@example.org';
-SELECT order_id FROM orders JOIN customers ON orders.customer_id=customers.customer_id GROUP BY customers.email HAVING customers.email='carl19@example.com';
+--SELECT order_id FROM orders JOIN customers ON orders.customer_id=customers.customer_id GROUP BY customers.email HAVING customers.email='carl19@example.com';
 --SELECT order_id FROM orders JOIN customers ON orders.customer_id=customers.customer_id GROUP BY customers.email HAVING customers.email='';
 --SELECT order_id FROM orders JOIN customers ON orders.customer_id=customers.customer_id GROUP BY customers.email HAVING customers.email='';
 --SELECT order_id FROM orders JOIN customers ON orders.customer_id=customers.customer_id GROUP BY customers.email HAVING customers.email='';
@@ -72,3 +72,5 @@ yvonne33@example.net
 2|cameronharris@example.org
 */
 --lmartin@example.com
+
+SELECT SUM(total_amount) FROM customers LEFT JOIN orders ON orders.customer_id=customers.customer_id GROUP BY orders.customer_id ORDER BY SUM(total_amount) DESC LIMIT 5;

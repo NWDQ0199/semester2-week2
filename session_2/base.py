@@ -21,17 +21,30 @@ def task_2(db):
     print(f"Total number of customers: {row[0]}")
 
 def task_3(db,email):
-    sql="SELECT order_id,order_date,status,total_amount FROM orders JOIN customers ON orders.customer_id=customers.customer_id WHERE customers.email=?;"
+    sql="SELECT order_id, order_date, status, total_amount FROM orders JOIN customers ON orders.customer_id=customers.customer_id WHERE customers.email=?;"
     cursor=db.execute(sql,(email,))
     for row in cursor:
         order_id,order_date,status,total_amount=row[0],row[1],row[2],row[3]
         print(f"Order\n\tID: {order_id}\n\tDate: {order_date}\n\tStatus: {status}\n\tAmount: {total_amount}")
 
+def task_4(db):
+    cursor=db.execute("SELECT product_id, name, category, price FROM products WHERE price<2;")
+    for row in cursor:
+        product_id,name,category,price=row[0],row[1],row[2],row[3]
+        print(f"Product\n\tID: {product_id}\n\tName: {name}\n\tCategory: {category}\n\tPrice: {price}")
+
+def task_5(db):
+    cursor=db.execute("SELECT customers.customer_id, SUM(total_amount) FROM customers LEFT JOIN orders ON orders.customer_id=customers.customer_id GROUP BY orders.customer_id ORDER BY SUM(total_amount) DESC LIMIT 5;")
+    for row in cursor:
+        print(f"Customer\n\tID: {row[0]}\n\tSpent: {row[1]}")
+
 def main():
     db=get_connection()
-    task_1(db)
-    task_2(db)
-    task_3(db,r"lmartin@example.com")
+    #task_1(db)
+    #task_2(db)
+    #task_3(db,r"lmartin@example.com")
+    #task_4(db)
+    task_5(db)
     db.close()
 
 
